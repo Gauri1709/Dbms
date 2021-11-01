@@ -89,14 +89,14 @@ def display_list():
     display_list = Toplevel(login_page)
     display_list.title("what you want")
     display_list.geometry("300x250")
-    B1 = Button(display_list, text="Users", width=10, height=1, bg="blue", command=display_users())
-    B2 = Button(display_list, text="Brand", width=10, height=1, bg="blue",
-                command=display_brand())
-    B3 = Button(display_list, text="Category", width=10, height=1, bg="blue",
-                command=display_category())
-    B1.grid(row=0, column=1)
-    B2.grid(row=0, column=0)
-    B1.grid(row=1, column=1)
+    B1 = Button(display_list, text="Users", width=10, height=1, bg="blue", command= lambda m =None:display_users())
+    B2 = Button(display_list, text="Brand", width=10, height=1, bg="blue", command=lambda m =None:display_brand())
+    B3 = Button(display_list, text="Category", width=10, height=1, bg="blue",command=lambda m =None:display_category())
+    B4 = Button(display_list, text="Products", width=10, height=1, bg="blue",command=lambda m =None:display_products())
+    B1.grid(row=0, column=0)
+    B2.grid(row=0, column=1)
+    B3.grid(row=1, column=0)
+    B4.grid(row=1,column=1)
 
 
 def display_users():
@@ -158,7 +158,7 @@ def display_employess():
 
 
 def display_brand():
-    brnd = Brand
+    brnd = Brand()
     brand = brnd.display_brands()
     global brand_table
     global display_brand
@@ -205,8 +205,8 @@ def display_category():
 
 
 def display_products():
-    prdt = Product
-    products = Product.display_products()
+    prdt = Product()
+    products = prdt.display_products()
     global product_table
     global display_product
     display_product = Toplevel(tkWindow)
@@ -277,7 +277,8 @@ def selectProduct(a):
 def main():
     tkWindow.geometry("300x250")
     tkWindow.title("Account Login")
-    Button(text="login", height="2", width="30", command=register).pack()
+    Button(text="Register", height="2", width="30", command=register).pack()
+    Button(text="Login", height="2", width="30", command=login).pack()
     tkWindow.mainloop()
 
 if __name__ == "__main__":
