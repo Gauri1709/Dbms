@@ -1,3 +1,12 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@Gauri1709
+Gauri1709 /
+Dbms
 CREATE TABLE IF NOT EXISTS users(
     user_id  numeric(4) NOT NULL,
     username VARCHAR(10) NOT NULL,
@@ -51,7 +60,6 @@ CREATE TABLE IF NOT EXISTS brands(
     branch_id NUMERIC(4) NOT  NULL,
     brand_name VARCHAR(10) NOT  NULL,
     brand_active NUMERIC(1) DEFAULT NULL,
-    category_id NUMERIC(4) NOT NULL,
     primary key(branch_id),
     foreign key(category_id) references category(category_id)
 );
@@ -85,4 +93,5 @@ CREATE TABLE IF NOT EXISTS ORDER_CLIENT(
     foreign key (user_id) references users(user_id)
 		on delete cascade
 );
+
 

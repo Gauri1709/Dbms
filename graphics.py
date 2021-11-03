@@ -1,3 +1,4 @@
+
 import mysql.connector
 import tkinter as tk
 from tkinter import *
@@ -35,6 +36,8 @@ def login():
     login_page = Toplevel(tkWindow)
     login_page.title("Login")
     login_page.geometry("300x250")
+    bg = PhotoImage(file = "img.png")
+
 
     global login_username
     global login_password
@@ -45,7 +48,7 @@ def login():
     login_username = StringVar()
     login_password = StringVar()
 
-    Label(login_page, text="Please detail if you already registerd", bg="grey").pack()
+    Label(login_page, text="Please detail if you already registerd").pack()
     Label(login_page, text="").pack()
     Label(login_page, text="Username:-").pack()
     login_username_enter = Entry(login_page, textvariable=login_username).pack()
@@ -88,15 +91,22 @@ def display_list():
     global display_list
     display_list = Toplevel(login_page)
     display_list.title("what you want")
-    display_list.geometry("300x250")
-    B1 = Button(display_list, text="Users", width=10, height=1, bg="blue", command= lambda m =None:display_users())
-    B2 = Button(display_list, text="Brand", width=10, height=1, bg="blue", command=lambda m =None:display_brand())
-    B3 = Button(display_list, text="Category", width=10, height=1, bg="blue",command=lambda m =None:display_category())
-    B4 = Button(display_list, text="Products", width=10, height=1, bg="blue",command=lambda m =None:display_products())
-    B1.grid(row=0, column=0)
-    B2.grid(row=0, column=1)
-    B3.grid(row=1, column=0)
-    B4.grid(row=1,column=1)
+    display_list.geometry("380x250")
+    B1 = Button(display_list, text="Users", width=20, height=3, bg="blue", command= lambda m =None:display_users())
+    B2 = Button(display_list, text="Brand", width=20, height=3, bg="cyan", command=lambda m =None:display_brand())
+    B3 = Button(display_list, text="Category", width=20, height=3, bg="magenta",command=lambda m =None:display_category())
+    B4 = Button(display_list, text="Products", width=20, height=3, bg="yellow",command=lambda m =None:display_products())
+    B5 = Button(display_list, text="Order", width=20, height=3, bg="red",command=lambda m =None:display_order())
+    B6 = Button(display_list, text="Department", width=20, height=3, bg="blue",command=lambda m =None:display_department())
+    B7 = Button(display_list, text="SHOW INVENTORY", width=20, height=3, bg="grey",command=lambda m =None:display_department())
+
+    B1.grid(row=1, column=0)
+    B2.grid(row=1, column=1)
+    B3.grid(row=2, column=0)
+    B4.grid(row=2,column=1)
+    B5.grid(row=3, column = 0)
+    B6.grid(row=3,column=1)
+    B7.place(relx=0.5, rely=0.905, anchor=CENTER)
 
 
 def display_users():
@@ -130,7 +140,7 @@ def display_employess():
     employee = emp.display_employees()
     global emp_table
     global display_emp
-    display_emp = Toplevel(tkWindow)
+    display_emp = Toplevel(display_list)
     display_emp.title("Employee")
     display_emp.geometry("300x250")
     emp_table = ttk.Treeview(display_emp, column=("c1", "c2", "c3", "c4", "c5", "c6", "c7"), show='headings')
@@ -162,7 +172,7 @@ def display_brand():
     brand = brnd.display_brands()
     global brand_table
     global display_brand
-    display_brand = Toplevel(tkWindow)
+    display_brand = Toplevel(display_list)
     display_brand.title("Brand")
     display_brand.geometry("300x250")
     brand_table = ttk.Treeview(display_brand, column=("c1", "c2", "c3"), show='headings')
@@ -186,7 +196,7 @@ def display_category():
     category =cat.display_categorys()
     global category_table
     global display_category
-    display_category = Toplevel(tkWindow)
+    display_category = Toplevel(display_list)
     display_category.title("Category")
     display_category.geometry("300x250")
     category_table = ttk.Treeview(display_category, column=("c1", "c2", "c3"), show='headings')
@@ -209,7 +219,7 @@ def display_products():
     products = prdt.display_products()
     global product_table
     global display_product
-    display_product = Toplevel(tkWindow)
+    display_product = Toplevel(display_list)
     display_product.title("Employee")
     display_product.geometry("300x250")
     product_table = ttk.Treeview(display_product, column=("c1", "c2", "c3", "c4", "c5", "c6", "c7"), show='headings')
@@ -233,6 +243,58 @@ def display_products():
     product_table.bind('<ButtonRelease-1>', selectProduct)
     product_table.grid()
     product_table.pack()
+
+def display_orders():
+    orde = Order()
+    orders = orde.display_order()
+    global order_table
+    global display_order
+    display_order = Toplevel(display_list)
+    display_order.title("Employee")
+    display_order.geometry("300x250")
+    product_table = ttk.Treeview(display_product, column=("c1", "c2", "c3", "c4", "c5", "c6", "c7"), show='headings')
+
+    for o in orders:
+        order_table.insert("", tk.END, values=o)
+    order_table.column("#1", anchor=tk.CENTER)
+    order_table.heading("#1", text="order_id")
+    order_table.column("#2", anchor=tk.CENTER)
+    order_table.heading("#2", text="client name")
+    order_table.column("#3", anchor=tk.CENTER)
+    order_table.heading("#3", text="No of items")
+    order_table.column("#4", anchor=tk.CENTER)
+    order_table.heading("#4", text="Total")
+    order_table.column("#5", anchor=tk.CENTER)
+    order_table.heading("#5", text="Payement status")
+    order_table.column("#6", anchor=tk.CENTER)
+    order_table.heading("#6", text="due")
+    order_table.column("#7", anchor=tk.CENTER)
+    order_table.heading("#7", text="paid")
+    order_table.bind('<ButtonRelease-1>', selectProduct)
+    order_table.grid()
+    order_table.pack()
+
+def display_department():
+    dep = Department()
+    dept =dep.display_department()
+    global dept_table
+    global display_dept
+    display_dept = Toplevel(display_list)
+    display_dept.title("department")
+    display_dept.geometry("300x250")
+    dept_table = ttk.Treeview(display_dept, column=("c1", "c2", "c3"), show='headings')
+
+    for c in dept:
+        dept_table.insert("", tk.END, values=c)
+    dept_table.column("#1", anchor=tk.CENTER)
+    dept_table.heading("#1", text="dept_id")
+    dept_table.column("#2", anchor=tk.CENTER)
+    dept_table.heading("#2", text="dept name")
+    dept_table.column("#3", anchor=tk.CENTER)
+    dept_table.heading("#3", text="manager id")
+    dept_table.bind('<ButtonRelease-1>', selectdept)
+    dept_table.grid()
+    dept_table.pack()
 
 def new_user():
     user = USER()
@@ -273,13 +335,39 @@ def selectCategory(a):
 def selectProduct(a):
     curItem = product_table.focus()
     return product_table.item(curItem)
+def selectdept(a):
+    curItem = dept_table.focus()
+    return dept_table.item(curItem)
+def all_count():
+    user = USER()
+    users = user.count_user()
+    emp = Employee()
+    employee = emp.count_employee()
+    cat = Category()
+    category =cat.count_category()
+    brnd = Brand()
+    brand = brnd.count_brand()
+    #dep = Department()
+    #dept =dep.count_department()
+    prdt = Product()
+    products = prdt.count_product()
+    print(users,employee,category,brand,products)
+
 
 def main():
+    all_count()
     tkWindow.geometry("300x250")
     tkWindow.title("Account Login")
+    bg = PhotoImage(file = "img.png")
+    label1 = Label(tkWindow,image = bg)
+    label1.place(x = 0,y = 0)
+
+
     Button(text="Register", height="2", width="30", command=register).pack()
     Button(text="Login", height="2", width="30", command=login).pack()
     tkWindow.mainloop()
 
 if __name__ == "__main__":
     main()
+
+
