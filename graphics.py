@@ -8,27 +8,27 @@ from main import *
 
 tkWindow = Tk()
 
-def dashboard():
-
-    global dashboardPage
-    dashboardpage = Toplevel(tkWindow)
-    dashboardpage.title("Dashboard")
-    dashboardpage.geometry("300x300")
-
-    user_button = Button(register_page, text="User", width=10, height=1, bg="black", command=new_user)
-    user_button.pack(side=LEFT)
-
-    employee_button = Button(register_page, text="Employee", width=10, height=1, bg="black", command=new_user)
-    employee_button.pack(side=RIGHT)
-
-    product_button = Button(register_page, text="product", width=10, height=1, bg="black", command=new_user)
-    product_button.pack(side=RIGHT)
-
-    category_button = Button(register_page, text="category", width=10, height=1, bg="black", command=new_user)
-    category_button.pack(side=LEFT)
-
-    brands_button = Button(register_page, text="Brands", width=10, height=1, bg="black", command=new_user)
-    brands_button.pack(side=BOTTOM)
+# def dashboard():
+#
+#     global dashboardPage
+#     dashboardpage = Toplevel(tkWindow)
+#     dashboardpage.title("Dashboard")
+#     dashboardpage.geometry("300x300")
+#
+#     user_button = Button(register_page, text="User", width=10, height=1, bg="black", command=new_user)
+#     user_button.pack(side=LEFT)
+#
+#     employee_button = Button(register_page, text="Employee", width=10, height=1, bg="black", command=new_user)
+#     employee_button.pack(side=RIGHT)
+#
+#     product_button = Button(register_page, text="product", width=10, height=1, bg="black", command=new_user)
+#     product_button.pack(side=RIGHT)
+#
+#     category_button = Button(register_page, text="category", width=10, height=1, bg="black", command=new_user)
+#     category_button.pack(side=LEFT)
+#
+#     brands_button = Button(register_page, text="Brands", width=10, height=1, bg="black", command=new_user)
+#     brands_button.pack(side=BOTTOM)
 
 
 def login():
@@ -36,7 +36,7 @@ def login():
     login_page = Toplevel(tkWindow)
     login_page.title("Login")
     login_page.geometry("300x250")
-    bg = PhotoImage(file = "img.png")
+   # bg = PhotoImage(file = "img.png")
 
 
     global login_username
@@ -48,7 +48,7 @@ def login():
     login_username = StringVar()
     login_password = StringVar()
 
-    Label(login_page, text="Please detail if you already registerd").pack()
+    Label(login_page, text="Please enter details if you already registerd").pack()
     Label(login_page, text="").pack()
     Label(login_page, text="Username:-").pack()
     login_username_enter = Entry(login_page, textvariable=login_username).pack()
@@ -83,14 +83,104 @@ def register():
     Label(register_page, text="Password:-").pack()
     password_enter = Entry(register_page, textvariable=password, show="*").pack()
     Label(register_page, text="").pack()
-    register_button = Button(register_page, text="Register", width=10, height=1, bg="black", command=new_user)
+    register_button = Button(register_page, text="Register", width=10, height=1, bg="grey", command=new_user)
     register_button.pack()
 
+def add_product(): # #  product_id, product_name, quantity, rate
+    global product_page
+    product_page = Toplevel(tkWindow)
+    product_page.title("product")
+    product_page.geometry("300x300")
+
+    global productid
+    global productname
+    global quantity
+    global rate
+    global productname_enter
+    global quantity_enter
+    global rate_enter
+    global productid_enter
+    productid = IntVar()
+    productname = StringVar()
+    quantity = IntVar()
+    rate = IntVar()
+    Label(product_page, text="Please enter Product Details", bg="grey").pack()
+    Label(product_page, text="").pack()
+    Label(product_page, text="Productid:-").pack()
+    productid_enter = Entry(product_page, textvariable=productid).pack()
+    Label(product_page, text="Product name:-").pack()
+    productname_enter = Entry(product_page, textvariable=productname).pack()
+    Label(product_page, text="Quantity:-").pack()
+    quantity_enter = Entry(product_page, textvariable=quantity, show="*").pack()
+    Label(product_page, text="Rate:-").pack()
+    rate_enter = Entry(product_page, textvariable=rate, show="*").pack()
+    Label(product_page, text="").pack()
+    product_button = Button(product_page, text="product", width=10, height=1, bg="grey", command=new_product)
+    product_button.pack()
+
+def add_category(): #category_id, category_name, quantity, rate
+    global category_page
+    category_page = Toplevel(tkWindow)
+    category_page.title("category")
+    category_page.geometry("300x300")
+
+    global categoryid
+    global categoryname
+    global active
+    global categoryname_enter
+    global active_enter
+    global categoryid_enter
+    categoryid = IntVar()
+    categoryname = StringVar()
+    active = IntVar()
+    Label(category_page, text="Please enter Category Details", bg="grey").pack()
+    Label(category_page, text="").pack()
+    Label(category_page, text="categoryid:-").pack()
+    categoryid_enter = Entry(category_page, textvariable=categoryid).pack()
+    Label(category_page, text="category name:-").pack()
+    categoryname_enter = Entry(category_page, textvariable=categoryname).pack()
+    Label(category_page, text="Active:-").pack()
+    active_enter = Entry(category_page, textvariable=active, show="*").pack()
+    Label(category_page, text="").pack()
+    category_button = Button(category_page, text="category", width=10, height=1, bg="grey", command=new_cat)
+    category_button.pack()
+
+def add_brand():
+    global brand_page
+    brand_page = Toplevel(tkWindow)
+    brand_page.title("brand")
+    brand_page.geometry("300x300")
+
+    global brandid
+    global brandname
+    global active
+    global brandcatid
+    global brandname_enter
+    global active_enter
+    global brandid_enter
+    global brandcatid_enter
+    brandid = IntVar()
+    brandname = StringVar()
+    active = IntVar()
+    brandcatid = IntVar()
+    Label(brand_page, text="Please enter brand Details", bg="grey").pack()
+    Label(brand_page, text="").pack()
+    Label(brand_page, text="brandid:-").pack()
+    brandid_enter = Entry(brand_page, textvariable=brandid).pack()
+    Label(brand_page, text="brand cat id:-").pack()
+    brandcatid_enter = Entry(brand_page, textvariable=brandcatid).pack()
+    Label(brand_page, text="brand name:-").pack()
+    brandname_enter = Entry(brand_page, textvariable=brandname).pack()
+    Label(brand_page, text="Active:-").pack()
+    active_enter = Entry(brand_page, textvariable=active, show="*").pack()
+    Label(brand_page, text="").pack()
+    brand_button = Button(brand_page, text="brand", width=10, height=1, bg="grey", command=new_brand)
+    brand_button.pack()
 
 def display_list():
     global display_list
     display_list = Toplevel(login_page)
-    display_list.title("what you want")
+    display_list.title("Dashboard")
     display_list.geometry("380x250")
     B1 = Button(display_list, text="Users", width=20, height=3, bg="blue", command= lambda m =None:display_users())
     B2 = Button(display_list, text="Brand", width=20, height=3, bg="cyan", command=lambda m =None:display_brand())
@@ -98,7 +188,8 @@ def display_list():
     B4 = Button(display_list, text="Products", width=20, height=3, bg="yellow",command=lambda m =None:display_products())
     B5 = Button(display_list, text="Order", width=20, height=3, bg="red",command=lambda m =None:display_order())
     B6 = Button(display_list, text="Department", width=20, height=3, bg="blue",command=lambda m =None:display_department())
-    B7 = Button(display_list, text="SHOW INVENTORY", width=20, height=3, bg="grey",command=lambda m =None:display_department())
+    B7 = Button(display_list,text = "Add",width=20,height=3,bg='red',command= lambda m = None:add())
+    B9 = Button(display_list, text="SHOW INVENTORY", width=20, height=3, bg="grey",command=lambda m =None:display_department())
 
     B1.grid(row=1, column=0)
     B2.grid(row=1, column=1)
@@ -106,8 +197,21 @@ def display_list():
     B4.grid(row=2,column=1)
     B5.grid(row=3, column = 0)
     B6.grid(row=3,column=1)
-    B7.place(relx=0.5, rely=0.905, anchor=CENTER)
+    B7.grid(row=4,column=0)
+    B9.place(relx=0.5, rely=0.905, anchor=CENTER)
 
+def add():
+    global display_add
+    display_add = Toplevel(display_list)
+    display_add.title("Add Items")
+    display_add.geometry("380x250")
+    B1 = Button(display_add, text="Brand", width=20, height=3, bg="cyan", command=lambda m=None:add_brand())
+    B2 = Button(display_add, text="Category", width=20, height=3, bg="magenta",command=lambda m=None:add_category())
+    B3 = Button(display_add, text="Products", width=20, height=3, bg="yellow",command=lambda m=None:add_product())
+
+    B1.grid(row=1, column=0)
+    B2.grid(row=1, column=1)
+    B3.grid(row=2, column=0)
 
 def display_users():
 
@@ -305,6 +409,30 @@ def new_user():
     print(pwd)
     user.insert_user(userId, userName, pwd)
 
+
+def new_product():
+    prdt = Product()
+    productID = productid.get()
+    productName = productname.get()
+    qnty = quantity.get()
+    rte = rate.get()
+    prdt.insert_product(productID,productName,qnty,rte)
+
+def new_cat(): #category_id, category_name, category_active
+    cat = Category()
+    catID = categoryid.get()
+    catName = categoryname.get()
+    act = active.get()
+    cat.insert_category(catID,catName,act)
+
+def new_brand(): #brand_id, brand_name, brand_active #category_id
+    brnd = Brand()
+    brndID = brandid.get()
+    brndName = brandname.get()
+    catID = brandcatid.get()
+    act = active.get()
+    brnd.insert_brands(brndID,brndName,act,catID)
+
 def exist_user():
     user = login_username.get()
     pwd = login_password.get()
@@ -358,8 +486,8 @@ def main():
     all_count()
     tkWindow.geometry("300x250")
     tkWindow.title("Account Login")
-    bg = PhotoImage(file = "img.png")
-    label1 = Label(tkWindow,image = bg)
+   # bg = PhotoImage(file = "bg.jpg")
+    label1 = Label(tkWindow)
     label1.place(x = 0,y = 0)
 
 
@@ -367,7 +495,5 @@ def main():
     Button(text="Login", height="2", width="30", command=login).pack()
     tkWindow.mainloop()
 
-if __name__ == "__main__":
-    main()
-
+main()
 
