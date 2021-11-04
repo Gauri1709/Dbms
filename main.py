@@ -1,9 +1,9 @@
 import mysql.connector
 
-global variables
+#global variables
 host = "localhost"
 user = "root"
-password = ""
+password = "Vrathod07@"
 port = 3306
 database = "inventory"
 
@@ -31,11 +31,11 @@ class USER:
         mydb.close()
         return users
 
-    def insert_user(self,userid, username, password):
+    def insert_user(self, userid, username, password):
         mydb = connect()
         mycursor = mydb.cursor()
         sql = "INSERT INTO users (user_id, username, password) VALUES (%s, %s, %s)"
-        val = (userid,username,password)
+        val = (userid, username, password)
         mycursor.execute(sql, val)
         print("Succesfully added user")
         mydb.commit()
@@ -61,10 +61,8 @@ class USER:
         mydb.close()
         return count
 
-
-    #def search_user(mydb, username):
+    # def search_user(mydb, username):
     #      pass
-
 
 
 class Employee:
@@ -80,7 +78,7 @@ class Employee:
         mydb.close()
         return employees
 
-    def insert_employee(self,emp_id, first_name, last_name, birth_date, salary, dept_id):
+    def insert_employee(self, emp_id, first_name, last_name, birth_date, salary, dept_id):
         mydb = connect()
         mycursor = mydb.cursor()
         sql = "INSERT INTO employee (emp_id, first_name, last_name, birth_date, salary, dept_id) VALUES (%s, %s, %s,%s, %s, %s)"
@@ -118,8 +116,7 @@ class Department:
         mycursor = mydb.cursor()
         mycursor.execute('SELECT * FROM department')
         departments = mycursor.fetchall()
-        for department in departments:  
-            dept_id, dept_name, manager_id
+        for department in departments: #     dept_id, dept_name, manager_id
             print(f"Dept_ID {department[0]} DeptName: {department[1]} Manager_ID: {department[2]}")
         mycursor.close()
         mydb.close()
@@ -133,18 +130,17 @@ class Product:
         mycursor = mydb.cursor()
         mycursor.execute('SELECT * FROM product')
         products = mycursor.fetchall()
-        for product in products:  
-            product_id, product_name, quantity, rate
+        for product in products: #  product_id, product_name, quantity, rate
             print(f"Id: {product[0]} Name: {product[1]} Quantity: {product[2]} Rate: {product[3]}")
         mycursor.close()
         mydb.close()
         return products
 
-    def insert_product(self,product_id, product_name, quantity, rate):
+    def insert_product(self, product_id, product_name, quantity, rate, category_id, brand_id): #product_id, product_name, quantity, rate, category_id, brand_id
         mydb = connect()
         mycursor = mydb.cursor()
-        sql = "INSERT INTO product (product_id, product_name, quantity, rate) VALUES (%s, %s, %s,%s)"
-        val = (product_id, product_name, quantity, rate)
+        sql = "INSERT INTO product (product_id, product_name, quantity, rate, category_id, brand_id) VALUES (%s, %s, %s, %s, %s, %s)"
+        val = (product_id, product_name, quantity, rate,category_id, brand_id)
         mycursor.execute(sql, val)
         print("Succesfully added product")
         mydb.commit()
@@ -159,6 +155,7 @@ class Product:
         mydb.commit()
         mycursor.close()
         mydb.close()
+
     def count_product(self):
         mydb = connect()
         mycursor = mydb.cursor()
@@ -177,14 +174,13 @@ class Category:
         mycursor = mydb.cursor()
         mycursor.execute('SELECT * FROM category')
         categorys = mycursor.fetchall()
-        for category in categorys:  
-            category_id, category_name, category_active
+        for category in categorys: #     category_id, category_name, category_active
             print(f"Id: {category[0]} Name: {category[1]} Active: {category[2]}")
         mycursor.close()
         mydb.close()
         return categorys
 
-    def insert_category(self,category_id, category_name, category_active):
+    def insert_category(self, category_id, category_name, category_active):
         mydb = connect()
         mycursor = mydb.cursor()
         sql = "INSERT INTO category (category_id, category_name, category_active) VALUES (%s, %s, %s)"
@@ -215,25 +211,23 @@ class Category:
         return count
 
 
-
 class Brand:
     def display_brands(self):
         mydb = connect()
         mycursor = mydb.cursor()
         mycursor.execute('SELECT * FROM brands')
         brands = mycursor.fetchall()
-        for brand in brands:  
-            branch_id, brand_name, brand_active
+        for brand in brands: #branch_id, brand_name, brand_active
             print(f"Id: {brand[0]} Name: {brand[1]} Active: #{brand[2]}")
         mycursor.close()
         mydb.close()
         return brands
 
-    def insert_brands(self,branch_id, brand_name, brand_active):
+    def insert_brands(self, branch_id, brand_name, brand_active,category_id):
         mydb = connect()
         mycursor = mydb.cursor()
-        sql = "INSERT INTO brands (branch_id, brand_name, brand_active) VALUES (%s, %s, %s)"
-        val = (branch_id, brand_name, brand_active)
+        sql = "INSERT INTO brands (branch_id, brand_name, brand_active,category_id) VALUES (%s, %s, %s, %s)"
+        val = (branch_id, brand_name, brand_active,category_id)
         mycursor.execute(sql, val)
         print("Succesfully added brand")
         mydb.commit()
@@ -260,51 +254,43 @@ class Brand:
         return count
 
 
-'''class Orders:
- 
-      def display_order(self):
-          mydb = connect()
-          mycursor = mydb.cursor()
-          mycursor.execute('SELECT * FROM orders')
-          brands = mycursor.fetchall()
-          for brand in brands:  
-              branch_id, brand_name, brand_active, category_id
-              print(f"Id: {brand[0]} Name: {brand[1]} Active: {brand[2]}")
-          mycursor.close()
-          mydb.close()
- 
-      def insert_brands(self,branch_id, brand_name, brand_active, category_id):
-          mydb = connect()
-          mycursor = mydb.cursor()
-          sql = "INSERT INTO brands (branch_id, brand_name, brand_active, category_id) VALUES (%s, %s, %s, %s)"
-          val = (branch_id, brand_name, brand_active, category_id)
-          mycursor.execute(sql, val)
-          print("Succesfully added brand")
-          mydb.commit()
-          mycursor.close()
-          mydb.close()
- 
-      def remove_brands(self, branch_id):
-          mydb = connect()
-          mycursor = mydb.cursor()
-          mycursor.execute('DELETE FROM brands WHERE brand_id = %s;' % (branch_id))
-          print("Succesfully deleted brand")
-          mydb.commit()
-          mycursor.close()
-          mydb.close()'''
+class Orders:
 
- 
+    def display_order(self): #order_id, client_name, no_of_items, payment_status, due, paid, total, product_id, category_id, user_id
+      mydb = connect()
+      mycursor = mydb.cursor()
+      mycursor.execute('SELECT * FROM orders')
+      orders= mycursor.fetchall()
+      for order in orders:
+          print(f"Id: {orders[0]} Name: {order[1]} Total: {order[7]}")
+      mycursor.close()
+      mydb.close()
+
+    def insert_brands(self,order_id, client_name, no_of_items, payment_status, due, paid, total, product_id, category_id, user_id):
+      mydb = connect()
+      mycursor = mydb.cursor()
+      sql = "INSERT INTO brands (order_id, client_name, client_contact, no_of_items, payment_status, due, paid, total, product_id, category_id, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %S, %s, %s, %s)"
+      val = (order_id, client_name, no_of_items, payment_status, due, paid, total, product_id, category_id, user_id)
+      mycursor.execute(sql, val)
+      print("Succesfully added order")
+      mydb.commit()
+      mycursor.close()
+      mydb.close()
+
+    def remove_brands(self, order_id):
+      mydb = connect()
+      mycursor = mydb.cursor()
+      mycursor.execute('DELETE FROM brands WHERE order_id = %s;' % (order_id))
+      print("Succesfully deleted order")
+      mydb.commit()
+      mycursor.close()
+      mydb.close()
+
+
 def main():
-
-    user = USER()
-    user.display_users()
-    user.remove_user(3)
-    user.remove_user(4)
-    user.remove_user(5)
-    user.display_users()
+   prdt = Product()
+   prdt.insert_product(2346,"brush",23,3465.7,5698,4444)
 
 if __name__ == "__main__":
     main()
-
-
 
