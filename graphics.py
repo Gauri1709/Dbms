@@ -4,6 +4,8 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from main import *
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
 tkWindow = Tk()
 def login():
@@ -174,7 +176,8 @@ def display_list():
     B5 = Button(display_list, text="Order", width=20, height=3, bg="red",command=lambda m =None:display_order())
     B6 = Button(display_list, text="Department", width=20, height=3, bg="blue",command=lambda m =None:display_department())
     B7 = Button(display_list,text = "Add",width=20,height=3,bg='red',command= lambda m = None:add())
-    B9 = Button(display_list, text="SHOW INVENTORY", width=20, height=3, bg="grey",command=lambda m =None:display_department())
+    B8 = Button(display_list, text="Search", width=20, height=3, bg='red', command=lambda m=None: add())
+    B9 = Button(display_list, text="SHOW INVENTORY", width=20, height=3, bg="grey",command=lambda m =None:create_charts())
 
     B1.grid(row=1, column=0)
     B2.grid(row=1, column=1)
@@ -183,7 +186,8 @@ def display_list():
     B5.grid(row=3, column = 0)
     B6.grid(row=3,column=1)
     B7.grid(row=4,column=0)
-    B9.place(relx=0.5, rely=0.905, anchor=CENTER)
+    B8.grid(row=4,column=1)
+    B9.place(relx=0.5, rely=1.0, anchor=CENTER)
 
 def add():
     global display_add
@@ -197,6 +201,55 @@ def add():
     B1.grid(row=1, column=0)
     B2.grid(row=1, column=1)
     B3.grid(row=2, column=0)
+
+def create_charts():
+
+    global inventory_page
+    inventory_page = Toplevel(display_list)
+    inventory_page.title("inventory")
+    inventory_page.geometry("300x300")
+    user  = USER()
+    emp = Employee()
+    prdt  = Product()
+    brnd = Brand()
+    cat = Category()
+
+    global x1
+    global x2
+    global x3
+    global x4
+    global x5
+    global pie2
+
+    canvas1 = tk.Canvas(tkWindow, width=800, height=300)
+    canvas1.pack()
+
+    label1 = tk.Label(tkWindow, text='Inventory')
+    label1.config(font=('Arial', 20))
+    canvas1.create_window(400, 50, window=label1)
+
+    pc = prdt.distinct_product()
+    uc = user.distinct_users()
+    ec = emp.distinct_employees()
+    bc = brnd.distinct_brand()
+    cc = cat.distinct_category()
+
+    x1 = uc[0][0]
+    x2 = pc[0][0]
+    x3 = ec[0][0]
+    x4 = bc[0][0]
+    x5 = cc[0][0]
+
+    figure2 = Figure(figsize=(4, 3), dpi=100)
+    subplot2 = figure2.add_subplot(111)
+    labels2 = 'Users', 'Product', 'Employees','Brands','Category'
+    pieSizes = [float(x1), float(x2), float(x3), float(x4), float(x5)]
+    my_colors2 = ['lightblue', 'lightsteelblue', 'silver']
+    explode2 = (0, 0.1, 0, 0.1, 0)
+    subplot2.pie(pieSizes, colors=my_colors2, explode=explode2, labels=labels2, autopct='%1.1f%%', shadow=True,startangle=90)
+    subplot2.axis('equal')
+    pie2 = FigureCanvasTkAgg(figure2, tkWindow)
+    pie2.get_tk_widget().pack()
 
 def display_users():
 
@@ -480,7 +533,7 @@ def main():
 
     Button(text="Register", height="2", width="30", command=register).pack()
     Button(text="Login", height="2", width="30", command=login).pack()
+   #  create_charts()
     tkWindow.mainloop()
 
 main()
-
