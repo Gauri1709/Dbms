@@ -1,4 +1,3 @@
-
 import mysql.connector
 import tkinter as tk
 from tkinter import *
@@ -7,7 +6,6 @@ from tkinter import messagebox
 from main import *
 
 tkWindow = Tk()
-
 def login():
     global login_page
     login_page = Toplevel(tkWindow)
@@ -67,17 +65,23 @@ def add_product(): # #  product_id, product_name, quantity, rate
     global product_page
     product_page = Toplevel(tkWindow)
     product_page.title("product")
-    product_page.geometry("300x300")
+    product_page.geometry("300x350")
 
     global productid
     global productname
     global quantity
     global rate
+    global productcatid
+    global productbrandid
     global productname_enter
     global quantity_enter
     global rate_enter
     global productid_enter
+    global productcatid_enter
+    global productbrandid_enter
     productid = IntVar()
+    productcatid = IntVar()
+    productbrandid = IntVar()
     productname = StringVar()
     quantity = IntVar()
     rate = IntVar()
@@ -85,6 +89,10 @@ def add_product(): # #  product_id, product_name, quantity, rate
     Label(product_page, text="").pack()
     Label(product_page, text="Productid:-").pack()
     productid_enter = Entry(product_page, textvariable=productid).pack()
+    Label(product_page, text="Product cat id:-").pack()
+    productid_enter = Entry(product_page, textvariable=productcatid).pack()
+    Label(product_page, text="Product brand id:-").pack()
+    productid_enter = Entry(product_page, textvariable=productbrandid).pack()
     Label(product_page, text="Product name:-").pack()
     productname_enter = Entry(product_page, textvariable=productname).pack()
     Label(product_page, text="Quantity:-").pack()
@@ -392,8 +400,10 @@ def new_product():
     productID = productid.get()
     productName = productname.get()
     qnty = quantity.get()
+    prdcatid = productcatid.get()
+    prdtbrndid = productbrandid.get()
     rte = rate.get()
-    prdt.insert_product(productID,productName,qnty,rte)
+    prdt.insert_product(productID,productName,qnty,rte,prdcatid,prdtbrndid)
 
 def new_cat(): #category_id, category_name, category_active
     cat = Category()
