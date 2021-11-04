@@ -8,29 +8,6 @@ from main import *
 
 tkWindow = Tk()
 
-# def dashboard():
-#
-#     global dashboardPage
-#     dashboardpage = Toplevel(tkWindow)
-#     dashboardpage.title("Dashboard")
-#     dashboardpage.geometry("300x300")
-#
-#     user_button = Button(register_page, text="User", width=10, height=1, bg="black", command=new_user)
-#     user_button.pack(side=LEFT)
-#
-#     employee_button = Button(register_page, text="Employee", width=10, height=1, bg="black", command=new_user)
-#     employee_button.pack(side=RIGHT)
-#
-#     product_button = Button(register_page, text="product", width=10, height=1, bg="black", command=new_user)
-#     product_button.pack(side=RIGHT)
-#
-#     category_button = Button(register_page, text="category", width=10, height=1, bg="black", command=new_user)
-#     category_button.pack(side=LEFT)
-#
-#     brands_button = Button(register_page, text="Brands", width=10, height=1, bg="black", command=new_user)
-#     brands_button.pack(side=BOTTOM)
-
-
 def login():
     global login_page
     login_page = Toplevel(tkWindow)
