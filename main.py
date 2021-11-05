@@ -3,7 +3,7 @@ import mysql.connector
 #global variables
 host = "localhost"
 user = "root"
-password = "Vrathod07@"
+password = ""
 port = 3306
 database = "inventory"
 
@@ -95,11 +95,11 @@ class Employee:
         mydb.close()
         return employees
 
-    def insert_employee(self, emp_id, first_name, last_name, birth_date, salary, dept_id):
+    def insert_employee(self, emp_id, first_name, last_name, birth_date, salary, user_id,dept_id):
         mydb = connect()
         mycursor = mydb.cursor()
-        sql = "INSERT INTO employee (emp_id, first_name, last_name, birth_date, salary, dept_id) VALUES (%s, %s, %s,%s, %s, %s)"
-        val = (emp_id, first_name, last_name, birth_date, salary, dept_id)
+        sql = "INSERT INTO employee(emp_id, first_name, last_name, birth_date, salary, user_id,dept_id) VALUES (%s, %s, %s,%s, %s, %s,%s)"
+        val = (emp_id, first_name, last_name, birth_date, salary, user_id,dept_id)
         mycursor.execute(sql, val)
         print("Succesfully added employee")
         mydb.commit()
@@ -159,6 +159,27 @@ class Department:
         mydb.close()
         return departments
 
+    def insert_department(self, dept_id, dept_name, manager_id):
+        mydb = connect()
+        mycursor = mydb.cursor()
+        sql = "INSERT INTO department (dept_id, dept_name, manager_id) VALUES (%s, %s, %s)"
+        val = (dept_id, dept_name, manager_id)
+        mycursor.execute(sql, val)
+        print("Succesfully added department")
+        mydb.commit()
+        mycursor.close()
+        mydb.close()
+
+
+    def remove_department(self, dept_id):
+        mydb = connect()
+        mycursor = mydb.cursor()
+        mycursor.execute('DELETE FROM department  WHERE dept_id = %s;' % (dept_id))
+        print("Succesfully deleted product")
+        mydb.commit()
+        mycursor.close()
+        mydb.close()
+
 
 class Product:
 
@@ -173,11 +194,11 @@ class Product:
         mydb.close()
         return products
 
-    def insert_product(self, product_id, product_name, quantity, rate, category_id, brand_id): #product_id, product_name, quantity, rate, category_id, brand_id
+    def insert_product(self, product_id, product_name, quantity, rate, category_id, brand_id,user_id): #product_id, product_name, quantity, rate, category_id, brand_id
         mydb = connect()
         mycursor = mydb.cursor()
-        sql = "INSERT INTO product (product_id, product_name, quantity, rate, category_id, brand_id) VALUES (%s, %s, %s, %s, %s, %s)"
-        val = (product_id, product_name, quantity, rate,category_id, brand_id)
+        sql = "INSERT INTO product (product_id, product_name, quantity, rate, productid,category_id,user_id) VALUES (%s, %s, %s, %s, %s, %s,%s)"
+        val = (product_id, product_name, quantity, rate,category_id, brand_id,user_id)
         mycursor.execute(sql, val)
         print("Succesfully added product")
         mydb.commit()
@@ -302,11 +323,11 @@ class Brand:
         mydb.close()
         return brands
 
-    def insert_brands(self, branch_id, brand_name, brand_active,category_id):
+    def insert_brands(self, branch_id, brand_name, brand_active):
         mydb = connect()
         mycursor = mydb.cursor()
-        sql = "INSERT INTO brands (branch_id, brand_name, brand_active,category_id) VALUES (%s, %s, %s, %s)"
-        val = (branch_id, brand_name, brand_active,category_id)
+        sql = "INSERT INTO brands (branch_id, brand_name, brand_active) VALUES (%s, %s, %s)"
+        val = (branch_id, brand_name, brand_active)
         mycursor.execute(sql, val)
         print("Succesfully added brand")
         mydb.commit()
@@ -364,22 +385,23 @@ class Order:
           print(f"Id: {orders[0]} Name: {order[1]} Total: {order[7]}")
       mycursor.close()
       mydb.close()
+      return orders
 
-    def insert_brands(self,order_id, client_name, no_of_items, payment_status, due, paid, total, product_id, category_id, user_id):
+    def insert_order(self,order_id, client_name, no_of_items, payment_status, due, paid, total, product_id):
       mydb = connect()
       mycursor = mydb.cursor()
-      sql = "INSERT INTO brands (order_id, client_name, client_contact, no_of_items, payment_status, due, paid, total, product_id, category_id, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %S, %s, %s, %s)"
-      val = (order_id, client_name, no_of_items, payment_status, due, paid, total, product_id, category_id, user_id)
+      sql = "INSERT INTO orders (order_id, client_name, no_of_items, payment_status, due, paid, total, product_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %S, %s, %s, %s)"
+      val = (order_id, client_name, no_of_items, payment_status, due, paid, total, product_id)
       mycursor.execute(sql, val)
       print("Succesfully added order")
       mydb.commit()
       mycursor.close()
       mydb.close()
 
-    def remove_brands(self, order_id):
+    def remove_order(self, order_id):
       mydb = connect()
       mycursor = mydb.cursor()
-      mycursor.execute('DELETE FROM brands WHERE order_id = %s;' % (order_id))
+      mycursor.execute('DELETE FROM orders WHERE order_id = %s;' % (order_id))
       print("Succesfully deleted order")
       mydb.commit()
       mycursor.close()
@@ -393,4 +415,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

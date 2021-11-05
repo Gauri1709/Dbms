@@ -1,3 +1,4 @@
+
 import mysql.connector
 import tkinter as tk
 from tkinter import *
@@ -74,6 +75,7 @@ def add_product(): # #  product_id, product_name, quantity, rate
     global quantity
     global rate
     global productcatid
+    global productuserid
     global productbrandid
     global productname_enter
     global quantity_enter
@@ -81,8 +83,10 @@ def add_product(): # #  product_id, product_name, quantity, rate
     global productid_enter
     global productcatid_enter
     global productbrandid_enter
+    global productuserid_enter
     productid = IntVar()
     productcatid = IntVar()
+    productuserid = IntVar()
     productbrandid = IntVar()
     productname = StringVar()
     quantity = IntVar()
@@ -93,16 +97,72 @@ def add_product(): # #  product_id, product_name, quantity, rate
     productid_enter = Entry(product_page, textvariable=productid).pack()
     Label(product_page, text="Product cat id:-").pack()
     productid_enter = Entry(product_page, textvariable=productcatid).pack()
+    Label(product_page, text="Product user id:-").pack()
+    productid_enter = Entry(product_page, textvariable=productuserid).pack()
     Label(product_page, text="Product brand id:-").pack()
     productid_enter = Entry(product_page, textvariable=productbrandid).pack()
     Label(product_page, text="Product name:-").pack()
     productname_enter = Entry(product_page, textvariable=productname).pack()
     Label(product_page, text="Quantity:-").pack()
-    quantity_enter = Entry(product_page, textvariable=quantity, show="*").pack()
+    quantity_enter = Entry(product_page, textvariable=quantity).pack()
     Label(product_page, text="Rate:-").pack()
-    rate_enter = Entry(product_page, textvariable=rate, show="*").pack()
+    rate_enter = Entry(product_page, textvariable=rate).pack()
     Label(product_page, text="").pack()
     product_button = Button(product_page, text="product", width=10, height=1, bg="grey", command=new_product)
+    product_button.pack()
+
+def order_product(): 
+    global order_page
+    order_page = Toplevel(tkWindow)
+    order_page.title("order")
+    order_page.geometry("300x350")
+
+    global orderid
+    global clientname
+    global no_of_items
+    global payment_status
+    global paid
+    global due
+    global total
+    global product_id
+    global clientname_enter
+    global no_of_items_enter
+    global payment_status_enter
+    global paid_enter
+    global due_enter
+    global total_enter
+    global product_id_enter
+    orderid = IntVar()
+    no_of_items = IntVar()
+    productbrandid = IntVar()
+    clientname = StringVar()
+    payment_status = StringVar()
+    quantity = IntVar()
+    paid = IntVar()
+    due = IntVar()
+    total = IntVar()
+    product_id = IntVar()
+    Label(order_page, text="Please enter order Details", bg="grey").pack()
+    Label(order_page, text="").pack()
+    Label(order_page, text="orderid:-").pack()
+    orderid_enter = Entry(order_page, textvariable=orderid).pack()
+    Label(order_page, text="client name:-").pack()
+    clientname_enter = Entry(order_page, textvariable=clientname).pack()
+    Label(order_page, text="no of items:-").pack()
+    no_of_items_enter = Entry(order_page, textvariable=no_of_items).pack()
+    Label(order_page, text="Payment status:-").pack()
+    payment_status_enter = Entry(order_page, textvariable=payment_status).pack()
+    Label(order_page, text="paid:-").pack()
+    paid_enter = Entry(order_page, textvariable=paid).pack()
+    Label(order_page, text="due:-").pack()
+    due_enter = Entry(order_page, textvariable=due).pack()
+    Label(order_page, text="Total:-").pack()
+    total_enter = Entry(order_page, textvariable=total).pack()
+    Label(order_page, text="Product id:-").pack()
+    product_id_enter = Entry(order_page, textvariable=product_id).pack()
+    Label(order_page, text="").pack()
+
+    product_button = Button(order_page, text="Order", width=10, height=1, bg="grey", command=new_order)
     product_button.pack()
 
 def add_category(): #category_id, category_name, quantity, rate
@@ -119,7 +179,7 @@ def add_category(): #category_id, category_name, quantity, rate
     global categoryid_enter
     categoryid = IntVar()
     categoryname = StringVar()
-    active = IntVar()
+    active = StringVar()
     Label(category_page, text="Please enter Category Details", bg="grey").pack()
     Label(category_page, text="").pack()
     Label(category_page, text="categoryid:-").pack()
@@ -127,9 +187,9 @@ def add_category(): #category_id, category_name, quantity, rate
     Label(category_page, text="category name:-").pack()
     categoryname_enter = Entry(category_page, textvariable=categoryname).pack()
     Label(category_page, text="Active:-").pack()
-    active_enter = Entry(category_page, textvariable=active, show="*").pack()
+    active_enter = Entry(category_page, textvariable=active).pack()
     Label(category_page, text="").pack()
-    category_button = Button(category_page, text="category", width=10, height=1, bg="grey", command=new_cat)
+    category_button = Button(category_page, text="Add", width=10, height=1, bg="grey", command=new_cat)
     category_button.pack()
 
 def add_brand():
@@ -141,53 +201,121 @@ def add_brand():
     global brandid
     global brandname
     global active
-    global brandcatid
     global brandname_enter
     global active_enter
     global brandid_enter
-    global brandcatid_enter
     brandid = IntVar()
     brandname = StringVar()
-    active = IntVar()
-    brandcatid = IntVar()
+    active = StringVar()
     Label(brand_page, text="Please enter brand Details", bg="grey").pack()
     Label(brand_page, text="").pack()
     Label(brand_page, text="brandid:-").pack()
     brandid_enter = Entry(brand_page, textvariable=brandid).pack()
-    Label(brand_page, text="brand cat id:-").pack()
-    brandcatid_enter = Entry(brand_page, textvariable=brandcatid).pack()
     Label(brand_page, text="brand name:-").pack()
     brandname_enter = Entry(brand_page, textvariable=brandname).pack()
     Label(brand_page, text="Active:-").pack()
     active_enter = Entry(brand_page, textvariable=active, show="*").pack()
     Label(brand_page, text="").pack()
-    brand_button = Button(brand_page, text="brand", width=10, height=1, bg="grey", command=new_brand)
+    brand_button = Button(brand_page, text="Add", width=10, height=1, bg="grey", command=new_brand)
     brand_button.pack()
+
+def add_department():
+    global dept_page
+    dept_page = Toplevel(tkWindow)
+    dept_page.title("brand")
+    dept_page.geometry("300x300")
+
+    global deptid
+    global deptname
+    global manager_id
+    global deptname_enter
+    global deptid_enter
+    global manager_id_enter
+    deptid = IntVar()
+    deptname = StringVar()
+    manager_id = IntVar()
+    Label(dept_page, text="Please enter Department Details", bg="grey").pack()
+    Label(dept_page, text="").pack()
+    Label(dept_page, text="Dept id:-").pack()
+    brandid_enter = Entry(dept_page, textvariable=deptid).pack()
+    Label(dept_page, text="Dept name:-").pack()
+    brandname_enter = Entry(dept_page, textvariable=deptname).pack()
+    Label(dept_page, text="manager_id:-").pack()
+    active_enter = Entry(dept_page, textvariable=manager_id, show="*").pack()
+    Label(dept_page, text="").pack()
+    brand_button = Button(dept_page, text="Add", width=10, height=1, bg="grey", command=new_department)
+    brand_button.pack()
+def add_employee(): # #  product_id, product_name, quantity, rate
+    global epl_page_page
+    epl_page = Toplevel(tkWindow)
+    epl_page.title("product")
+    epl_page.geometry("300x350")
+
+    global empid
+    global emp_first_name
+    global salary
+    global birthdate
+    global emp_last_name
+    global usr_id
+    global dpt_id
+    global empid_enter
+    global emp_first_name_enter
+    global emp_last_name_enter
+    global salary_enter
+    global birthdate_enter
+    global usrid_enter
+    global dptid_enter
+    empid = IntVar()
+    emp_first_name = StringVar()
+    salary = IntVar()
+    birthdate = StringVar()
+    emp_last_name = StringVar()
+    usr_id = IntVar()
+    dpt_id = IntVar()
+    Label(epl_page, text="Please enter Employee Details", bg="grey").pack()
+    Label(epl_page, text="").pack()
+    Label(epl_page, text="employee id:-").pack()
+    empid_enter = Entry(epl_page, textvariable=empid).pack()
+    Label(epl_page, text="Employee first name:-").pack()
+    emp_first_name_enter = Entry(epl_page, textvariable=emp_first_name).pack()
+    Label(epl_page, text="Employee last name:-").pack()
+    emp_last_name_enter = Entry(epl_page, textvariable=emp_last_name).pack()
+    Label(epl_page, text="salary:-").pack()
+    salary_enter = Entry(epl_page, textvariable=salary).pack()
+    Label(epl_page, text="Birthdate:-").pack()
+    birthdate_enter = Entry(epl_page, textvariable=birthdate).pack()
+    Label(epl_page, text="user id:-").pack()
+    usrid_enter = Entry(epl_page, textvariable=usr_id).pack()
+    Label(epl_page, text="department id:-").pack()
+    dptid_enter = Entry(epl_page, textvariable=dpt_id).pack()
+    Label(epl_page, text="").pack()
+    emp_button = Button(epl_page, text="Employee", width=10, height=1, bg="grey", command=new_employee)
+    emp_button.pack()
+
 
 def display_list():
     global display_list
     display_list = Toplevel(login_page)
     display_list.title("Dashboard")
-    display_list.geometry("380x250")
+    display_list.geometry("565x260")
     B1 = Button(display_list, text="Users", width=20, height=3, bg="blue", command= lambda m =None:display_users())
     B2 = Button(display_list, text="Brand", width=20, height=3, bg="cyan", command=lambda m =None:display_brand())
     B3 = Button(display_list, text="Category", width=20, height=3, bg="magenta",command=lambda m =None:display_category())
     B4 = Button(display_list, text="Products", width=20, height=3, bg="yellow",command=lambda m =None:display_products())
-    B5 = Button(display_list, text="Order", width=20, height=3, bg="red",command=lambda m =None:display_order())
-    B6 = Button(display_list, text="Department", width=20, height=3, bg="blue",command=lambda m =None:display_department())
-    B7 = Button(display_list,text = "Add",width=20,height=3,bg='red',command= lambda m = None:add())
-    B8 = Button(display_list, text="Search", width=20, height=3, bg='red', command=lambda m=None: add())
-    B9 = Button(display_list, text="SHOW INVENTORY", width=20, height=3, bg="grey",command=lambda m =None:create_charts())
-
+    B5 = Button(display_list, text="Order", width=20, height=3, bg="red",command=lambda m =None:display_orders())
+    B6 = Button(display_list, text="Search", width=20, height=3, bg='cyan', command=lambda m=None: add())
+    B7 = Button(display_list, text="SHOW INVENTORY", width=25, height=3, bg="grey",command=lambda m =None:create_charts())
+    B8 = Button(display_list, text="Employee", width=20, height=3, bg='cyan', command=lambda m=None: display_employess())
+    B9 = Button(display_list, text="Department", width=20, height=3, bg="red",command=lambda m =None:display_department())
     B1.grid(row=1, column=0)
     B2.grid(row=1, column=1)
-    B3.grid(row=2, column=0)
-    B4.grid(row=2,column=1)
-    B5.grid(row=3, column = 0)
-    B6.grid(row=3,column=1)
-    B7.grid(row=4,column=0)
-    B8.grid(row=4,column=1)
-    B9.place(relx=0.5, rely=1.0, anchor=CENTER)
+    B3.grid(row=1, column=2)
+    B4.grid(row=2,column=0)
+    B5.grid(row=2, column = 1)
+    B6.grid(row=2,column=2)
+    B8.grid(row=3, column = 0)
+    B9.grid(row=3,column=1)
+    B7.place(relx=0.5, rely=0.87, anchor=CENTER)
 
 def add():
     global display_add
@@ -196,11 +324,51 @@ def add():
     display_add.geometry("380x250")
     B1 = Button(display_add, text="Brand", width=20, height=3, bg="cyan", command=lambda m=None:add_brand())
     B2 = Button(display_add, text="Category", width=20, height=3, bg="magenta",command=lambda m=None:add_category())
-    B3 = Button(display_add, text="Products", width=20, height=3, bg="yellow",command=lambda m=None:add_product())
+    B3 = Button(display_add, text="Products", width=20, height=3, bg="red",command=lambda m=None:add_product())
+    B4 = Button(display_add, text="orders", width=20, height=3, bg="blue",command=lambda m=None:add_order())
 
     B1.grid(row=1, column=0)
     B2.grid(row=1, column=1)
     B3.grid(row=2, column=0)
+    B4.grid(row=2, column=1)
+
+def delete_brand():
+	brd = Brand()
+	selected_item = brand_table.selection()[0]
+	brand_id = brand_table.item(selected_item)['values'][0]
+	brd.remove_brands(brand_id)
+	brand_table.delete(selected_item)
+def delete_category():
+	cat = Category()
+	selected_item = category_table.selection()[0]
+	cat_id = category_table.item(selected_item)['values'][0]
+	cat.remove_category(cat_id)
+	category_table.delete(selected_item)
+def delete_product():
+	p = Product()
+	selected_item = product_table.selection()[0]
+	p_id = product_table.item(selected_item)['values'][0]
+	p.remove_product(p_id)
+	product_table.delete(selected_item)
+def delete_order():
+	o = Order()
+	selected_item = order_table.selection()[0]
+	o_id = category_table.item(selected_item)['values'][0]
+	o.remove_order(o_id)
+	order_table.delete(selected_item)
+def delete_department():
+	d = Department()
+	selected_item = dept_table.selection()[0]
+	d_id = dept_table.item(selected_item)['values'][0]
+	d.remove_department(d_id)
+	dept_table.delete(selected_item)
+def delete_employee():
+	o = Order()
+	selected_item = order_table.selection()[0]
+	o_id = category_table.item(selected_item)['values'][0]
+	o.remove_order(o_id)
+	order_table.delete(selected_item)
+
 
 def create_charts():
 
@@ -286,10 +454,12 @@ def display_employess():
     display_emp.title("Employee")
     display_emp.geometry("300x250")
     emp_table = ttk.Treeview(display_emp, column=("c1", "c2", "c3", "c4", "c5", "c6", "c7"), show='headings')
-
+    B1 = Button(display_emp, text="add", width=20, height=1, bg='blue', command=lambda m=None: add_employee())
+    B1.grid(row = 0,column = 0,sticky = W,columnspan =1)
+    B1 = Button(display_emp, text="delete", width=20, height=1, bg='blue', command=lambda m=None: delete_employee())
+    B1.grid(row = 0,column = 0,columnspan =1)
     for emp in employee:
         emp_table.insert("", tk.END, values=emp)
-        # print("password: " + user[2])
     emp_table.column("#1", anchor=tk.CENTER)
     emp_table.heading("#1", text="emp_id")
     emp_table.column("#2", anchor=tk.CENTER)
@@ -301,12 +471,11 @@ def display_employess():
     emp_table.column("#5", anchor=tk.CENTER)
     emp_table.heading("#5", text="salary")
     emp_table.column("#6", anchor=tk.CENTER)
-    emp_table.heading("#6", text="dept_name")
+    emp_table.heading("#6", text="user_id")
     emp_table.column("#7", anchor=tk.CENTER)
     emp_table.heading("#7", text="dept_id")
-    emp_table.bind('<ButtonRelease-1>', selectEmp)
-    emp_table.grid()
-    emp_table.pack()
+    emp_table.grid(row = 1, column =0)
+
 
 
 def display_brand():
@@ -317,6 +486,10 @@ def display_brand():
     display_brand = Toplevel(display_list)
     display_brand.title("Brand")
     display_brand.geometry("300x250")
+    B1 = Button(display_brand, text="add", width=20, height=1, bg='blue', command=lambda m=None: add_brand())
+    B1.grid(row = 0,column = 0,sticky = W,columnspan =1)
+    B1 = Button(display_brand, text="delete", width=20, height=1, bg='blue', command=lambda m=None: delete_brand())
+    B1.grid(row = 0,column = 0,columnspan =1)
     brand_table = ttk.Treeview(display_brand, column=("c1", "c2", "c3"), show='headings')
 
     for b in brand:
@@ -328,9 +501,8 @@ def display_brand():
     brand_table.heading("#2", text="brand name")
     brand_table.column("#3", anchor=tk.CENTER)
     brand_table.heading("#3", text="brand status")
-    brand_table.bind('<ButtonRelease-1>', selectBrand)
-    brand_table.grid()
-    brand_table.pack()
+   # brand_table.bind('<ButtonRelease-1>', selectBrand)
+    brand_table.grid(row = 1, column =0)
 
 
 def display_category():
@@ -341,6 +513,10 @@ def display_category():
     display_category = Toplevel(display_list)
     display_category.title("Category")
     display_category.geometry("300x250")
+    B1 = Button(display_category, text="add", width=20, height=1, bg='blue', command=lambda m=None: add_category())
+    B1.grid(row = 0,column = 0,sticky = W,columnspan =1)
+    B1 = Button(display_category, text="delete", width=20, height=1, bg='blue', command=lambda m=None: delete_category())
+    B1.grid(row = 0,column = 0,columnspan =1)
     category_table = ttk.Treeview(display_category, column=("c1", "c2", "c3"), show='headings')
 
     for c in category:
@@ -352,9 +528,7 @@ def display_category():
     category_table.column("#3", anchor=tk.CENTER)
     category_table.heading("#3", text="category status")
     category_table.bind('<ButtonRelease-1>', selectCategory)
-    category_table.grid()
-    category_table.pack()
-
+    category_table.grid(row = 1, column = 0)
 
 def display_products():
     prdt = Product()
@@ -362,8 +536,12 @@ def display_products():
     global product_table
     global display_product
     display_product = Toplevel(display_list)
-    display_product.title("Employee")
+    display_product.title("Products")
     display_product.geometry("300x250")
+    B1 = Button(display_product, text="add", width=20, height=1, bg='blue', command=lambda m=None: add_product())
+    B1.grid(row = 0,column = 0,sticky = W,columnspan =1)
+    B1 = Button(display_product, text="delete", width=20, height=1, bg='blue', command=lambda m=None: delete_product())
+    B1.grid(row = 0,column = 0,columnspan =1)
     product_table = ttk.Treeview(display_product, column=("c1", "c2", "c3", "c4", "c5", "c6", "c7"), show='headings')
 
     for p in products:
@@ -383,8 +561,7 @@ def display_products():
     product_table.column("#7", anchor=tk.CENTER)
     product_table.heading("#7", text="categoty_id")
     product_table.bind('<ButtonRelease-1>', selectProduct)
-    product_table.grid()
-    product_table.pack()
+    product_table.grid(row = 1,column = 0)
 
 def display_orders():
     orde = Order()
@@ -392,9 +569,13 @@ def display_orders():
     global order_table
     global display_order
     display_order = Toplevel(display_list)
-    display_order.title("Employee")
+    display_order.title("orders")
     display_order.geometry("300x250")
-    product_table = ttk.Treeview(display_product, column=("c1", "c2", "c3", "c4", "c5", "c6", "c7"), show='headings')
+    B1 = Button(display_order, text="add", width=20, height=1, bg='blue', command=lambda m=None: order_product())
+    B1.grid(row = 0,column = 0,sticky = W,columnspan =1)
+    B1 = Button(display_order, text="delete", width=20, height=1, bg='blue', command=lambda m=None: delete_order())
+    B1.grid(row = 0,column = 0,columnspan =1)
+    order_table = ttk.Treeview(display_order, column=("c1", "c2", "c3", "c4", "c5", "c6", "c7","C8"), show='headings')
 
     for o in orders:
         order_table.insert("", tk.END, values=o)
@@ -405,16 +586,17 @@ def display_orders():
     order_table.column("#3", anchor=tk.CENTER)
     order_table.heading("#3", text="No of items")
     order_table.column("#4", anchor=tk.CENTER)
-    order_table.heading("#4", text="Total")
+    order_table.heading("#4", text="payment_status")
     order_table.column("#5", anchor=tk.CENTER)
-    order_table.heading("#5", text="Payement status")
+    order_table.heading("#5", text="due")
     order_table.column("#6", anchor=tk.CENTER)
-    order_table.heading("#6", text="due")
+    order_table.heading("#6", text="paid")
     order_table.column("#7", anchor=tk.CENTER)
-    order_table.heading("#7", text="paid")
+    order_table.heading("#7", text="total")
+    order_table.column("#7", anchor=tk.CENTER)
+    order_table.heading("#8", text="prodct_id")
     order_table.bind('<ButtonRelease-1>', selectProduct)
-    order_table.grid()
-    order_table.pack()
+    order_table.grid(row =1, column =0)
 
 def display_department():
     dep = Department()
@@ -424,6 +606,10 @@ def display_department():
     display_dept = Toplevel(display_list)
     display_dept.title("department")
     display_dept.geometry("300x250")
+    B1 = Button(display_dept, text="add", width=20, height=1, bg='blue', command=lambda m=None: add_department())
+    B1.grid(row = 0,column = 0,sticky = W,columnspan =1)
+    B1 = Button(display_dept, text="delete", width=20, height=1, bg='blue', command=lambda m=None: delete_department())
+    B1.grid(row = 0,column = 0,columnspan =1)
     dept_table = ttk.Treeview(display_dept, column=("c1", "c2", "c3"), show='headings')
 
     for c in dept:
@@ -434,9 +620,8 @@ def display_department():
     dept_table.heading("#2", text="dept name")
     dept_table.column("#3", anchor=tk.CENTER)
     dept_table.heading("#3", text="manager id")
-    dept_table.bind('<ButtonRelease-1>', selectdept)
-    dept_table.grid()
-    dept_table.pack()
+    #dept_table.bind('<ButtonRelease-1>', selectdept)
+    dept_table.grid(row = 1, column = 0)
 
 def new_user():
     user = USER()
@@ -455,23 +640,61 @@ def new_product():
     qnty = quantity.get()
     prdcatid = productcatid.get()
     prdtbrndid = productbrandid.get()
+    prdtusrid = productuserid.get()
     rte = rate.get()
-    prdt.insert_product(productID,productName,qnty,rte,prdcatid,prdtbrndid)
+    prdt.insert_product(productID,productName,qnty,rte,prdcatid,prdtbrndid,prdtusrid)
+
+def new_employee():
+    ep = Employee()
+    empID = empid.get()
+    emp_firstName = emp_first_name.get()
+    emp_lastName = emp_last_name.get()
+    userID = usr_id.get()
+    dID = dpt_id.get()
+    dob = birthdate.get()
+    sal = salary.get()
+    ep.insert_employee(empID,emp_firstName,emp_lastName,dob,sal,userID,dID)
+
+
+def new_order():
+    order = Order()
+    orderID = orderid.get()
+    clientName = clientname.get()
+    items = no_of_items.get()
+    pay_stat = payment_status.get()
+    pyd = paid.get()
+    du = due.get()
+    ttl = total.get()
+    prdtid = product_id.get()
+    order.insert_order(orderID,clientName,items,pay_stat,pyd,due,ttl,prdtid)
+
 
 def new_cat(): #category_id, category_name, category_active
     cat = Category()
     catID = categoryid.get()
     catName = categoryname.get()
     act = active.get()
+    category = (catID,catName,act)
+    category_table.insert("", tk.END, values=category)
     cat.insert_category(catID,catName,act)
 
 def new_brand(): #brand_id, brand_name, brand_active #category_id
     brnd = Brand()
     brndID = brandid.get()
     brndName = brandname.get()
-    catID = brandcatid.get()
     act = active.get()
-    brnd.insert_brands(brndID,brndName,act,catID)
+    brand = (brndID,brndName,act)
+    brand_table.insert("", tk.END, values=brand)
+    brnd.insert_brands(brndID,brndName,act)
+
+def new_department():
+    dept = Department()
+    dept_id = deptid.get()
+    deptName = deptname.get()
+    man_id = manager_id.get()
+    m = (dept_id,deptName,man_id)
+    dept_table.insert("", tk.END, values=m)
+    dept.insert_department(dept_id,deptName,man_id)
 
 def exist_user():
     user = login_username.get()
@@ -491,11 +714,12 @@ def Exist(mydb, user):
 def selectUsr(a):
     curItem = user_table.focus()
     return user_table.item(curItem)
-def selectEmp(a):
+'''def selectEmp(a):
     curItem = emp_table.focus()
-    return emp_table.item(curItem)
+    return emp_table.item(curItem)'''
 def selectBrand(a):
     curItem = brand_table.focus()
+    print(brand_table.item(curItem)['values'])
     return brand_table.item(curItem)
 def selectCategory(a):
     curItem = category_table.focus()
@@ -503,7 +727,7 @@ def selectCategory(a):
 def selectProduct(a):
     curItem = product_table.focus()
     return product_table.item(curItem)
-def selectdept(a):
+'''def selectdept(a):
     curItem = dept_table.focus()
     return dept_table.item(curItem)
 def all_count():
@@ -519,11 +743,11 @@ def all_count():
     #dept =dep.count_department()
     prdt = Product()
     products = prdt.count_product()
-    print(users,employee,category,brand,products)
+    print(users,employee,category,brand,products)'''
 
 
 def main():
-    all_count()
+    #all_count()
     tkWindow.geometry("300x250")
     tkWindow.title("Account Login")
    # bg = PhotoImage(file = "bg.jpg")
@@ -537,3 +761,5 @@ def main():
     tkWindow.mainloop()
 
 main()
+
+
