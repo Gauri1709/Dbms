@@ -98,7 +98,7 @@ class Employee:
     def insert_employee(self, emp_id, first_name, last_name, birth_date, salary, user_id,dept_id):
         mydb = connect()
         mycursor = mydb.cursor()
-        sql = "INSERT INTO employee(emp_id, first_name, last_name, birth_date, salary, user_id,dept_id) VALUES (%s, %s, %s,%s, %s, %s,%s)"
+        sql = "INSERT INTO employee(emp_id, first_name, last_name, birth_date, salary, usr_id,dept_id) VALUES (%s, %s, %s,%s, %s, %s,%s)"
         val = (emp_id, first_name, last_name, birth_date, salary, user_id,dept_id)
         mycursor.execute(sql, val)
         print("Succesfully added employee")
@@ -197,7 +197,7 @@ class Product:
     def insert_product(self, product_id, product_name, quantity, rate, category_id, brand_id,user_id): #product_id, product_name, quantity, rate, category_id, brand_id
         mydb = connect()
         mycursor = mydb.cursor()
-        sql = "INSERT INTO product (product_id, product_name, quantity, rate, productid,category_id,user_id) VALUES (%s, %s, %s, %s, %s, %s,%s)"
+        sql = "INSERT INTO product(product_id, product_name, quantity, rate,category_id,branch_id,user_id) VALUES (%s, %s, %s, %s, %s, %s,%s)"
         val = (product_id, product_name, quantity, rate,category_id, brand_id,user_id)
         mycursor.execute(sql, val)
         print("Succesfully added product")
@@ -390,7 +390,7 @@ class Order:
     def insert_order(self,order_id, client_name, no_of_items, payment_status, due, paid, total, product_id):
       mydb = connect()
       mycursor = mydb.cursor()
-      sql = "INSERT INTO orders (order_id, client_name, no_of_items, payment_status, due, paid, total, product_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %S, %s, %s, %s)"
+      sql ="INSERT INTO orders(order_id, client_name, no_of_items, payment_status, due, paid, total, product_id) VALUES (%s, %s, %s, %s, %s,%s, %s, %s)"
       val = (order_id, client_name, no_of_items, payment_status, due, paid, total, product_id)
       mycursor.execute(sql, val)
       print("Succesfully added order")
@@ -406,6 +406,38 @@ class Order:
       mydb.commit()
       mycursor.close()
       mydb.close()
+class Contact:
+
+    def display_contact(self): #order_id,contact
+      mydb = connect()
+      mycursor = mydb.cursor()
+      mycursor.execute('SELECT * FROM contact')
+      con= mycursor.fetchall()
+      mycursor.close()
+      mydb.close()
+      return con
+
+    def insert_contact(self,order_id,contact):
+      mydb = connect()
+      mycursor = mydb.cursor()
+      sql ="INSERT INTO orders(order_id,contact) VALUES (%s, %s)"
+      val = (order_id,contact_no)
+
+      mycursor.execute(sql, val)
+      print("Succesfully added order")
+      mydb.commit()
+      mycursor.close()
+      mydb.close()
+
+    def remove_contact(self, order_id):
+      mydb = connect()
+      mycursor = mydb.cursor()
+      mycursor.execute('DELETE FROM orders WHERE order_id = %s;' % (contact))
+      print("Succesfully deleted order")
+      mydb.commit()
+      mycursor.close()
+      mydb.close()
+
 
 
 def main():

@@ -36,9 +36,8 @@ CREATE TABLE IF NOT EXISTS category(
 CREATE TABLE IF NOT EXISTS orders(
     order_id NUMERIC(4) NOT  NULL,
     client_name VARCHAR(20) NOT  NULL,
-    client_contact NUMERIC NOT  NULL,
     no_of_items NUMERIC  DEFAULT NULL,
-    payment_status NUMERIC(1) DEFAULT NULL,
+    payment_status VARCHAR(10) DEFAULT NULL,
     due NUMERIC(1) DEFAULT  NULL,
     paid NUMERIC(1) DEFAULT  NULL,
     total NUMERIC DEFAULT NULL,
@@ -48,6 +47,13 @@ CREATE TABLE IF NOT EXISTS orders(
 		on delete cascade
 );
 
+CREATE TABLE IF NOT EXISTS contact(
+    order_id NUMERIC(20) NOT  NULL,
+    contact NUMERIC(40) NOT  NULL,
+    primary key(contact),
+    foreign key (order_id) references orders(order_id)
+		on delete cascade
+);
 
 
 CREATE TABLE IF NOT EXISTS brands(
@@ -77,6 +83,7 @@ CREATE TABLE IF NOT EXISTS employee(
     foreign key (usr_id) references users(user_id)  
 	on delete cascade
 );
+
 CREATE TABLE IF NOT EXISTS ORDER_CLIENT(
 	bill_id numeric(4) NOT NULL,
 	user_id  numeric(4),

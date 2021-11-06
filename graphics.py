@@ -125,6 +125,8 @@ def order_product():
     global due
     global total
     global product_id
+    global phone_no1
+    global phone_no2
     global clientname_enter
     global no_of_items_enter
     global payment_status_enter
@@ -132,22 +134,28 @@ def order_product():
     global due_enter
     global total_enter
     global product_id_enter
+    global phone_no1_enter
+    global phone_no2_enter
     orderid = IntVar()
     no_of_items = IntVar()
-    productbrandid = IntVar()
     clientname = StringVar()
     payment_status = StringVar()
-    quantity = IntVar()
     paid = IntVar()
     due = IntVar()
     total = IntVar()
     product_id = IntVar()
+    phone_no1 = IntVar
+    phone_no2 = IntVar
     Label(order_page, text="Please enter order Details", bg="grey").pack()
     Label(order_page, text="").pack()
     Label(order_page, text="orderid:-").pack()
     orderid_enter = Entry(order_page, textvariable=orderid).pack()
     Label(order_page, text="client name:-").pack()
     clientname_enter = Entry(order_page, textvariable=clientname).pack()
+    Label(order_page, text="client Phone no 1:-").pack()
+    phone_no1_enter_enter = Entry(order_page, textvariable=phone_no1).pack()
+    Label(order_page, text="client phone no 2:-").pack()
+    phone_no2_enter = Entry(order_page, textvariable=phone_no2).pack()
     Label(order_page, text="no of items:-").pack()
     no_of_items_enter = Entry(order_page, textvariable=no_of_items).pack()
     Label(order_page, text="Payment status:-").pack()
@@ -218,6 +226,28 @@ def add_brand():
     Label(brand_page, text="").pack()
     brand_button = Button(brand_page, text="Add", width=10, height=1, bg="grey", command=new_brand)
     brand_button.pack()
+
+def add_contact():
+    global contact_page
+    contact_page = Toplevel(tkWindow)
+    contact_page.title("brand")
+    contact_page.geometry("300x300")
+
+    global orderid
+    global contct
+    global orderid_enter
+    global contct_enter
+    orderid = IntVar()
+    contct = INtVar()
+    Label(contact_page, text="Please enter brand Details", bg="grey").pack()
+    Label(contact_page, text="").pack()
+    Label(contact_page, text="orderid:-").pack()
+    orderid_enter = Entry(contact_page, textvariable=orderid).pack()
+    Label(contact_page, text="brand name:-").pack()
+    contct_enter = Entry(brand_page, textvariable=contct).pack()
+    Label(contact_page, text="").pack()
+    c_button = Button(contact_page, text="Add", width=10, height=1, bg="grey", command=new_contact)
+    c_button.pack()
 
 def add_department():
     global dept_page
@@ -307,6 +337,7 @@ def display_list():
     B7 = Button(display_list, text="SHOW INVENTORY", width=25, height=3, bg="grey",command=lambda m =None:create_charts())
     B8 = Button(display_list, text="Employee", width=20, height=3, bg='cyan', command=lambda m=None: display_employess())
     B9 = Button(display_list, text="Department", width=20, height=3, bg="red",command=lambda m =None:display_department())
+    B10 = Button(display_list, text="Contacts", width=20, height=3, bg="blue",command=lambda m =None:display_contact())
     B1.grid(row=1, column=0)
     B2.grid(row=1, column=1)
     B3.grid(row=1, column=2)
@@ -315,6 +346,7 @@ def display_list():
     B6.grid(row=2,column=2)
     B8.grid(row=3, column = 0)
     B9.grid(row=3,column=1)
+    B10.grid(row=3,column=2)
     B7.place(relx=0.5, rely=0.87, anchor=CENTER)
 
 def add():
@@ -363,11 +395,18 @@ def delete_department():
 	d.remove_department(d_id)
 	dept_table.delete(selected_item)
 def delete_employee():
-	o = Order()
-	selected_item = order_table.selection()[0]
-	o_id = category_table.item(selected_item)['values'][0]
-	o.remove_order(o_id)
-	order_table.delete(selected_item)
+	e = Employee()
+	selected_item = emp_table.selection()[0]
+	e_id = emp_table.item(selected_item)['values'][0]
+	e.remove_employee(e_id)
+	emp_table.delete(selected_item)
+def delete_contact():
+	c = Contact()
+	selected_item = contact_table.selection()[0]
+	con = emp_table.item(selected_item)['values'][1]
+	c.remove_contact(con)
+	contact_table.delete(selected_item)
+
 
 
 def create_charts():
@@ -439,7 +478,6 @@ def display_users():
     user_table.heading("#2", text="username")
     user_table.column("#3", anchor=tk.CENTER)
     user_table.heading("#3", text="password")
-    user_table.bind('<ButtonRelease-1>', selectUsr)
     user_table.grid()
     user_table.pack()
 
@@ -527,8 +565,30 @@ def display_category():
     category_table.heading("#2", text="category name")
     category_table.column("#3", anchor=tk.CENTER)
     category_table.heading("#3", text="category status")
-    category_table.bind('<ButtonRelease-1>', selectCategory)
+ 
     category_table.grid(row = 1, column = 0)
+
+def display_contact():
+    con = Contact()
+    contact =con.display_contact()
+    global contact_table
+    global display_contacts
+    display_contacts = Toplevel(display_list)
+    display_contacts.title("Category")
+    display_contacts.geometry("300x250")
+    B1 = Button(display_contacts, text="add", width=20, height=1, bg='blue', command=lambda m=None: add_contact())
+    B1.grid(row = 0,column = 0,sticky = W,columnspan =1)
+    B1 = Button(display_contacts, text="delete", width=20, height=1, bg='blue', command=lambda m=None: delete_contact())
+    B1.grid(row = 0,column = 0,sticky = E,columnspan =1)
+    contact_table = ttk.Treeview(display_contacts, column=("c1", "c2"), show='headings')
+
+    for c in contact:
+        contact_table.insert("", tk.END, values=c)
+    contact_table.column("#1", anchor=tk.CENTER)
+    contact_table.heading("#1", text="orderid")
+    contact_table.column("#2", anchor=tk.CENTER)
+    contact_table.heading("#2", text="contact")
+    contact_table.grid(row = 1, column = 0)
 
 def display_products():
     prdt = Product()
@@ -560,7 +620,6 @@ def display_products():
     product_table.heading("#6", text="brand_id")
     product_table.column("#7", anchor=tk.CENTER)
     product_table.heading("#7", text="categoty_id")
-    product_table.bind('<ButtonRelease-1>', selectProduct)
     product_table.grid(row = 1,column = 0)
 
 def display_orders():
@@ -595,7 +654,6 @@ def display_orders():
     order_table.heading("#7", text="total")
     order_table.column("#7", anchor=tk.CENTER)
     order_table.heading("#8", text="prodct_id")
-    order_table.bind('<ButtonRelease-1>', selectProduct)
     order_table.grid(row =1, column =0)
 
 def display_department():
@@ -642,6 +700,8 @@ def new_product():
     prdtbrndid = productbrandid.get()
     prdtusrid = productuserid.get()
     rte = rate.get()
+    p = (productID,productName,qnty,rte,prdcatid,prdtbrndid,prdtusrid)
+    product_table.insert("", tk.END, values=p)
     prdt.insert_product(productID,productName,qnty,rte,prdcatid,prdtbrndid,prdtusrid)
 
 def new_employee():
@@ -653,11 +713,14 @@ def new_employee():
     dID = dpt_id.get()
     dob = birthdate.get()
     sal = salary.get()
+    e = (empID,emp_firstName,emp_lastName,dob,sal,userID,dID)
+    emp_table.insert("", tk.END, values=e)
     ep.insert_employee(empID,emp_firstName,emp_lastName,dob,sal,userID,dID)
 
 
 def new_order():
     order = Order()
+    c = Contact()
     orderID = orderid.get()
     clientName = clientname.get()
     items = no_of_items.get()
@@ -666,6 +729,15 @@ def new_order():
     du = due.get()
     ttl = total.get()
     prdtid = product_id.get()
+    ph1 = phone_no1.get()
+    ph2 = phone_no2.get()
+    if(ph2 == 0):
+	    c.insert_contact(orderID,ph1)
+
+    else:
+	    c.insert_contact(orderID,ph1)
+	    c.insert_contact(orderID,ph2)
+
     order.insert_order(orderID,clientName,items,pay_stat,pyd,due,ttl,prdtid)
 
 
@@ -677,6 +749,13 @@ def new_cat(): #category_id, category_name, category_active
     category = (catID,catName,act)
     category_table.insert("", tk.END, values=category)
     cat.insert_category(catID,catName,act)
+def new_contact(): #category_id, category_name, category_active
+    co = Contact()
+    oID = orderid.get()
+    contact = contct.get()
+    cont = (oID,contact)
+    contact_table.insert("", tk.END, values=cont)
+    con.insert_contact(oID,contact)
 
 def new_brand(): #brand_id, brand_name, brand_active #category_id
     brnd = Brand()
@@ -711,39 +790,6 @@ def Exist(mydb, user):
     if (len(users) > 0):
         display_list()
 
-def selectUsr(a):
-    curItem = user_table.focus()
-    return user_table.item(curItem)
-'''def selectEmp(a):
-    curItem = emp_table.focus()
-    return emp_table.item(curItem)'''
-def selectBrand(a):
-    curItem = brand_table.focus()
-    print(brand_table.item(curItem)['values'])
-    return brand_table.item(curItem)
-def selectCategory(a):
-    curItem = category_table.focus()
-    return category_table.item(curItem)
-def selectProduct(a):
-    curItem = product_table.focus()
-    return product_table.item(curItem)
-'''def selectdept(a):
-    curItem = dept_table.focus()
-    return dept_table.item(curItem)
-def all_count():
-    user = USER()
-    users = user.count_user()
-    emp = Employee()
-    employee = emp.count_employee()
-    cat = Category()
-    category =cat.count_category()
-    brnd = Brand()
-    brand = brnd.count_brand()
-    #dep = Department()
-    #dept =dep.count_department()
-    prdt = Product()
-    products = prdt.count_product()
-    print(users,employee,category,brand,products)'''
 
 
 def main():
@@ -757,7 +803,7 @@ def main():
 
     Button(text="Register", height="2", width="30", command=register).pack()
     Button(text="Login", height="2", width="30", command=login).pack()
-   #  create_charts()
+  #  create_charts()
     tkWindow.mainloop()
 
 main()
